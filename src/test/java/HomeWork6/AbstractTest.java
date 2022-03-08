@@ -1,4 +1,4 @@
-package HomeWork5;
+package HomeWork6;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
@@ -12,9 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.concurrent.TimeUnit;
 
 public class AbstractTest {
-
-
-    private static WebDriver driver;
+    private static WebDriver webDriver;
 
     @BeforeAll
     static void init(){
@@ -23,22 +21,24 @@ public class AbstractTest {
         options.addArguments ("start-maximized");
         options.addArguments ("--incognito");
         options.addArguments ("disable-popup-blocking");
-        driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        webDriver = new ChromeDriver(options);
+        //webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @BeforeEach
     void goTo(){
-        Assertions.assertDoesNotThrow( ()-> driver.get("https://www.saucedemo.com/"),
+        Assertions.assertDoesNotThrow( ()-> webDriver.get("https://dev-py.jivestor.com/"),
                 "Страница не доступна");
+        Assertions.assertTrue(true);
     }
 
     @AfterAll
     static void close(){
-        driver.quit();
+        webDriver.quit();
     }
 
-    public static WebDriver getDriver() {
-        return driver;
+    public WebDriver getWebDriver() {
+        return this.webDriver;
     }
 }
